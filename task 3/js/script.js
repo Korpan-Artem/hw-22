@@ -48,42 +48,53 @@ function createCard(name, imageSrc, status, species,location) {
 
 	container.append(card);
 }
-
+let ii = 0;
 fetch('https://rickandmortyapi.com/api/character', {
 		method: 'GET'
 	})
 	.then(response => response.json())
 	.then((json) => {
 		json.results.map(function(results) {
-			//console.log(json);
+			console.log(json);
 			createCard(results.name,results.image,results.status,results.species,results.location.name);
+			
 		})
+		return json;
+	})
+	.then((json)=>{
+		document.getElementById("dead").addEventListener("click", ()=>{
+			container.innerHTML = '';
+			json.results.map(function(results) {
+				if(results.status === 'Dead'){
+					createCard(results.name,results.image,results.status,results.species,results.location.name);
+				}
+			})
+		});
+		document.getElementById("male").addEventListener("click", ()=>{
+			container.innerHTML = '';
+			json.results.map(function(results) {
+				if(results.gender === 'Male'){
+					createCard(results.name,results.image,results.status,results.species,results.location.name);
+				}
+			})
+		});
+		document.getElementById("female").addEventListener("click", ()=>{
+			container.innerHTML = '';
+			json.results.map(function(results) {
+				if(results.gender === 'Female'){
+					createCard(results.name,results.image,results.status,results.species,results.location.name);
+				}
+			})
+		});
+		document.getElementById("alive").addEventListener("click", ()=>{
+			container.innerHTML = '';
+			json.results.map(function(results) {
+				if(results.species === 'Alien'){
+					createCard(results.name,results.image,results.status,results.species,results.location.name);
+				}
+			})
+		});
 	});
 
-	let filter = document.getElementsByClassName('form-container');
 
-// let male = document.getElementById('male');
-// let female = document.getElementById('female');
-// let alive = document.getElementById('alive');
-// let dead = document.getElementById('dead');
-
-// male.onchange = () => {
-// 	changePersonage();
-// }
-
-// female.onchange = () => {
-// 	changePersonage();
-// }
-
-// alive.onchange = () => {
-// 	changePersonage();
-// }
-
-// dead.onchange = () => {
-// 	console.log();
-// 	changePersonage();
-// }
-
-// function changePersonage (o) {
-// 	console.log(o);
-// }
+	
